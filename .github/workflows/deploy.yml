@@ -30,15 +30,17 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build -- --base-href "/adhd-provjera/"
+        run: npm run build
+        env:
+          VITE_BASE: /adhd-provjera/
 
       - name: Copy index.html to 404.html (SPA fallback)
-        run: cp dist/adhd-provjera/browser/index.html dist/adhd-provjera/browser/404.html
+        run: cp dist/index.html dist/404.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/adhd-provjera/browser
+          path: dist
 
   deploy:
     needs: build

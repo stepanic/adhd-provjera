@@ -1,0 +1,92 @@
+import type { Kategorija, Rezultat } from '../data/asrs';
+
+interface Props {
+  rezultat: Rezultat;
+  ukupno: number;
+  onIspocetka: () => void;
+}
+
+const BOJE_KATEGORIJA: Record<Kategorija, string> = {
+  niska: 'bg-emerald-50',
+  blaga: 'bg-amber-50',
+  umjerena: 'bg-orange-50',
+  izrazena: 'bg-red-50',
+};
+
+export function Result({ rezultat, ukupno, onIspocetka }: Props) {
+  return (
+    <section className="bg-white rounded-2xl p-6 sm:p-7 shadow-[0_6px_24px_rgba(40,50,90,0.08)] mb-6">
+      <h2 className="text-2xl font-semibold text-[#2d3a66] mt-0 mb-4">Vaš rezultat</h2>
+
+      <div
+        className={`text-center rounded-xl py-5 px-4 ${BOJE_KATEGORIJA[rezultat.kategorija]}`}
+      >
+        <div className="text-5xl font-bold text-[#2d3a66] leading-none">
+          {rezultat.indikator}
+        </div>
+        <div className="text-sm text-[#5a627a] mt-1">indikator simptoma (0–100)</div>
+      </div>
+
+      <div className="h-3.5 bg-[#e6ebf5] rounded-full overflow-hidden mt-4 mb-2">
+        <div
+          className="h-full bg-gradient-to-r from-emerald-500 via-amber-400 to-red-500 transition-[width] duration-500"
+          style={{ width: `${rezultat.indikator}%` }}
+        />
+      </div>
+
+      <p className="text-[15px] my-4">{rezultat.porukaKategorije}</p>
+
+      <dl className="grid gap-2 my-4">
+        <Row label="Pozitivni odgovori (Dio A, screener)" value={`${rezultat.pozitivnoA} / 6`} />
+        <Row label="Pozitivni odgovori ukupno" value={`${rezultat.pozitivnoUkupno} / ${ukupno}`} />
+        <Row label="Sirovi zbroj" value={`${rezultat.ukupnoSum} / ${rezultat.maxSum}`} />
+      </dl>
+
+      {rezultat.screenerPozitivan && (
+        <div className="bg-red-50 border-l-4 border-red-600 rounded-md px-4 py-3 my-4 text-[15px]">
+          <strong>Screener Dijela A je pozitivan</strong> (≥ 4 pozitivna odgovora u 6
+          pitanja). Prema standardnoj ASRS interpretaciji, vaši simptomi su konzistentni
+          s ADHD-om u odraslih i <strong>preporuča se daljnja klinička procjena</strong>.
+        </div>
+      )}
+
+      <div className="bg-amber-50 border-l-4 border-amber-500 rounded-md px-4 py-3 my-4 text-[15px]">
+        <strong>Što sad?</strong>
+        <ul className="list-disc pl-5 mt-1 space-y-1">
+          <li>
+            Razgovarajte s <strong>obiteljskim liječnikom</strong> i zatražite uputnicu
+            prema psihijatru ili kliničkom psihologu.
+          </li>
+          <li>
+            U Hrvatskoj se ADHD u odraslih dijagnosticira u{' '}
+            <strong>psihijatrijskim ambulantama</strong> i{' '}
+            <strong>centrima za mentalno zdravlje</strong>.
+          </li>
+          <li>
+            Ovaj rezultat ponesite na pregled kao orijentacijsku informaciju —{' '}
+            <em>nije zamjena za stručnu procjenu</em>.
+          </li>
+        </ul>
+      </div>
+
+      <div className="flex justify-end gap-3">
+        <button
+          type="button"
+          onClick={onIspocetka}
+          className="bg-white border border-[#c8d0e0] text-[#2d3a66] rounded-xl px-4 py-3 hover:bg-[#f0f3fa]"
+        >
+          Ponovi provjeru
+        </button>
+      </div>
+    </section>
+  );
+}
+
+function Row({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex justify-between border-b border-dashed border-[#dbe2f0] pb-1">
+      <dt className="text-[#5a627a] m-0">{label}</dt>
+      <dd className="m-0 font-semibold">{value}</dd>
+    </div>
+  );
+}

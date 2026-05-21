@@ -1,17 +1,15 @@
 // ASRS v1.1 — Adult ADHD Self-Report Scale (WHO / Harvard Medical School)
-// Izvor: Kessler RC, et al. The World Health Organization Adult ADHD Self-Report Scale (ASRS).
+// Kessler RC, et al. The World Health Organization Adult ADHD Self-Report Scale (ASRS).
 // Psychol Med. 2005;35(2):245-256. https://www.hcp.med.harvard.edu/ncs/asrs.php
-//
-// Ovaj kod je obrazovni alat za samoprocjenu — NIJE klinička dijagnoza.
 
 export type Odgovor = 0 | 1 | 2 | 3 | 4;
 
 export interface Pitanje {
   redni: number;
   tekst: string;
-  prag: 2 | 3; // minimalna vrijednost odgovora koja se smatra "pozitivnom"
+  prag: 2 | 3;
   dio: 'A' | 'B';
-  primjer: string; // ilustrativna situacija (nije dio službenog upitnika)
+  primjer: string;
 }
 
 export const OPCIJE_ODGOVORA: { vrijednost: Odgovor; oznaka: string }[] = [
@@ -22,9 +20,6 @@ export const OPCIJE_ODGOVORA: { vrijednost: Odgovor; oznaka: string }[] = [
   { vrijednost: 4, oznaka: 'Vrlo često' },
 ];
 
-// Pragovi pozitivnog odgovora prema standardnom ASRS v1.1 obrascu bodovanja.
-// Pitanja 1-6 čine Dio A (screener); 4 ili više pozitivnih u Dijelu A upućuje
-// na simptome konzistentne s ADHD-om i preporuča se klinička procjena.
 export const PITANJA: Pitanje[] = [
   {
     redni: 1, dio: 'A', prag: 2,
@@ -118,17 +113,19 @@ export const PITANJA: Pitanje[] = [
   },
 ];
 
-export const PITANJA_KRATKO = PITANJA.filter(p => p.dio === 'A'); // 6 pitanja
-export const PITANJA_PUNO = PITANJA;                              // 18 pitanja
+export const PITANJA_KRATKO = PITANJA.filter(p => p.dio === 'A');
+export const PITANJA_PUNO = PITANJA;
+
+export type Kategorija = 'niska' | 'blaga' | 'umjerena' | 'izrazena';
 
 export interface Rezultat {
-  indikator: number;          // 0–100
-  pozitivnoA: number;         // broj pozitivnih u Dijelu A (0–6)
-  pozitivnoUkupno: number;    // broj pozitivnih ukupno
-  ukupnoSum: number;          // zbroj svih odgovora (raw score)
-  maxSum: number;             // teorijski maksimum zbroja
-  screenerPozitivan: boolean; // ≥4 pozitivnih u Dijelu A
-  kategorija: 'niska' | 'blaga' | 'umjerena' | 'izrazena';
+  indikator: number;
+  pozitivnoA: number;
+  pozitivnoUkupno: number;
+  ukupnoSum: number;
+  maxSum: number;
+  screenerPozitivan: boolean;
+  kategorija: Kategorija;
   porukaKategorije: string;
 }
 
@@ -151,7 +148,7 @@ export function izracunaj(pitanja: Pitanje[], odgovori: (Odgovor | null)[]): Rez
   const indikator = Math.round((ukupnoSum / maxSum) * 100);
   const screenerPozitivan = pozitivnoA >= 4;
 
-  let kategorija: Rezultat['kategorija'];
+  let kategorija: Kategorija;
   let porukaKategorije: string;
   if (indikator < 25) {
     kategorija = 'niska';

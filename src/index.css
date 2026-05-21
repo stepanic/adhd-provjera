@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  min-height: 100vh;
+}
+
+body {
+  background: linear-gradient(160deg, #eef3fb 0%, #f8f5ff 100%);
+  color: #1a1f2c;
+  font-family: theme('fontFamily.sans');
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
