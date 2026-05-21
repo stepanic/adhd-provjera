@@ -1,0 +1,255 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: linear-gradient(160deg, #eef3fb 0%, #f8f5ff 100%);
+  color: #1a1f2c;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  line-height: 1.5;
+}
+
+.omotac {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.zaglavlje {
+  text-align: center;
+  padding: 1rem 0 2rem;
+}
+
+.zaglavlje h1 {
+  font-size: 2rem;
+  margin: 0;
+  color: #2d3a66;
+}
+
+.podnaslov {
+  margin: 0.25rem 0 0;
+  color: #5a627a;
+  font-size: 0.95rem;
+}
+
+.kartica {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.75rem 1.5rem;
+  box-shadow: 0 6px 24px rgba(40, 50, 90, 0.08);
+  margin-bottom: 1.5rem;
+}
+
+.kartica h2 {
+  margin-top: 0;
+  color: #2d3a66;
+}
+
+.upozorenje {
+  background: #fff8e6;
+  border-left: 4px solid #e0a800;
+  padding: 0.9rem 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  font-size: 0.95rem;
+}
+
+.upozorenje.istaknuto {
+  background: #fde9e9;
+  border-left-color: #c0392b;
+}
+
+.upozorenje ul {
+  margin: 0.4rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.izbor-verzije {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.primarni-gumb,
+.sekundarni-gumb,
+.odgovor-gumb {
+  font: inherit;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 0.85rem 1.1rem;
+  border: 1px solid transparent;
+  transition: transform 0.05s ease, background 0.15s ease, border-color 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.primarni-gumb {
+  background: #3a56d4;
+  color: #fff;
+  font-weight: 600;
+}
+
+.primarni-gumb:hover:not([disabled]) {
+  background: #2c44b5;
+}
+
+.primarni-gumb[disabled],
+.sekundarni-gumb[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.sekundarni-gumb {
+  background: #fff;
+  color: #2d3a66;
+  border-color: #c8d0e0;
+}
+
+.sekundarni-gumb:hover:not([disabled]) {
+  background: #f0f3fa;
+}
+
+.pomocna {
+  font-weight: 400;
+  font-size: 0.85rem;
+  opacity: 0.85;
+  margin-top: 0.25rem;
+}
+
+.traka-napretka {
+  height: 8px;
+  background: #e6ebf5;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.traka-napretka.veliki {
+  height: 14px;
+  margin: 1rem 0 0.5rem;
+}
+
+.traka-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50, #ffc107 60%, #e74c3c);
+  transition: width 0.3s ease;
+}
+
+.brojac {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #5a627a;
+  margin: 0 0 1rem;
+}
+
+.dio-oznaka {
+  background: #eef0f8;
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+}
+
+.pitanje-tekst {
+  font-size: 1.15rem;
+  margin: 0 0 1.25rem;
+  color: #1a1f2c;
+  line-height: 1.45;
+}
+
+.odgovori {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.odgovor-gumb {
+  background: #f6f8fc;
+  border-color: #dbe2f0;
+  color: #1a1f2c;
+  font-weight: 500;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.odgovor-gumb:hover {
+  background: #eef2fa;
+}
+
+.odgovor-gumb.odabran {
+  background: #3a56d4;
+  color: #fff;
+  border-color: #2c44b5;
+}
+
+.navigacija {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.indikator-omotac {
+  text-align: center;
+  padding: 1.5rem 1rem 1rem;
+  border-radius: 12px;
+  background: #f6f8fc;
+  margin: 0.5rem 0;
+}
+
+.indikator-omotac[data-kategorija="niska"]    { background: #e9f7ec; }
+.indikator-omotac[data-kategorija="blaga"]    { background: #fff9e0; }
+.indikator-omotac[data-kategorija="umjerena"] { background: #ffeed6; }
+.indikator-omotac[data-kategorija="izrazena"] { background: #fbe1e1; }
+
+.indikator-broj {
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #2d3a66;
+}
+
+.indikator-podtekst {
+  color: #5a627a;
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+}
+
+.poruka-kategorije {
+  font-size: 1.05rem;
+  margin: 1rem 0;
+}
+
+.detalji {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.detalji > div {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed #dbe2f0;
+  padding-bottom: 0.4rem;
+}
+
+.detalji dt {
+  color: #5a627a;
+  margin: 0;
+}
+
+.detalji dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.podnozje {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #5a627a;
+  padding: 0 0.5rem;
+}
+
+@media (max-width: 540px) {
+  .navigacija { flex-direction: column-reverse; }
+  .primarni-gumb, .sekundarni-gumb { width: 100%; }
+  .indikator-broj { font-size: 3rem; }
+}

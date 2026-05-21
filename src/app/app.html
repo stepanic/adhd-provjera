@@ -1,0 +1,149 @@
+<main class="omotac">
+  <header class="zaglavlje">
+    <h1>ADHD provjera</h1>
+    <p class="podnaslov">Offline alat za samoprocjenu prema ASRS v1.1</p>
+  </header>
+
+  @if (korak() === 'pocetak') {
+    <section class="kartica">
+      <h2>Dobrodošli</h2>
+      <p>
+        Ova aplikacija provodi <strong>samoprocjenu</strong> simptoma ADHD-a u odraslih
+        koristeći upitnik <strong>ASRS v1.1</strong> Svjetske zdravstvene organizacije i
+        Harvard Medical School. Sva obrada odgovora odvija se isključivo u vašem
+        pregledniku — ništa se ne šalje na internet.
+      </p>
+
+      <div class="upozorenje">
+        <strong>Važno:</strong> rezultat ove provjere <em>nije medicinska dijagnoza</em>.
+        ADHD može dijagnosticirati isključivo kvalificirani liječnik (psihijatar) ili
+        klinički psiholog kroz detaljnu kliničku procjenu. Ako vam rezultat ili vlastiti
+        doživljaj sugeriraju značajne poteškoće, obratite se obiteljskom liječniku radi
+        upute na specijalističku obradu.
+      </div>
+
+      <h3>Odaberite verziju upitnika</h3>
+      <div class="izbor-verzije">
+        <button class="primarni-gumb" type="button" (click)="zapocni('kratko')">
+          Kratka verzija (6 pitanja)
+          <span class="pomocna">Screener — brza okvirna provjera</span>
+        </button>
+        <button class="primarni-gumb" type="button" (click)="zapocni('puno')">
+          Puna verzija (18 pitanja)
+          <span class="pomocna">Detaljni upitnik svih simptoma</span>
+        </button>
+      </div>
+    </section>
+  }
+
+  @if (korak() === 'upitnik') {
+    <section class="kartica">
+      <div class="traka-napretka" [attr.aria-label]="'Napredak ' + napredak() + ' posto'">
+        <div class="traka-fill" [style.width.%]="napredak()"></div>
+      </div>
+      <p class="brojac">
+        Pitanje {{ trenutni() + 1 }} od {{ pitanja().length }}
+        <span class="dio-oznaka">Dio {{ pitanje().dio }}</span>
+      </p>
+
+      <h2 class="pitanje-tekst">{{ pitanje().tekst }}</h2>
+
+      <div class="odgovori" role="radiogroup" [attr.aria-label]="pitanje().tekst">
+        @for (o of opcije; track o.vrijednost) {
+          <button
+            type="button"
+            class="odgovor-gumb"
+            role="radio"
+            [attr.aria-checked]="odgovori()[trenutni()] === o.vrijednost"
+            [class.odabran]="odgovori()[trenutni()] === o.vrijednost"
+            (click)="odgovori_klik(o.vrijednost)"
+          >
+            {{ o.oznaka }}
+          </button>
+        }
+      </div>
+
+      <div class="navigacija">
+        <button
+          type="button"
+          class="sekundarni-gumb"
+          [disabled]="!mozeNatrag()"
+          (click)="natrag()"
+        >
+          ← Natrag
+        </button>
+        <button
+          type="button"
+          class="primarni-gumb"
+          [disabled]="!mozeNaprijed()"
+          (click)="naprijed()"
+        >
+          {{ zadnjePitanje() ? 'Prikaži rezultat' : 'Sljedeće →' }}
+        </button>
+      </div>
+    </section>
+  }
+
+  @if (korak() === 'rezultat') {
+    <section class="kartica">
+      <h2>Vaš rezultat</h2>
+
+      <div class="indikator-omotac" [attr.data-kategorija]="rezultat().kategorija">
+        <div class="indikator-broj">{{ rezultat().indikator }}</div>
+        <div class="indikator-podtekst">indikator simptoma (0–100)</div>
+      </div>
+
+      <div class="traka-napretka veliki">
+        <div class="traka-fill" [style.width.%]="rezultat().indikator"></div>
+      </div>
+
+      <p class="poruka-kategorije">{{ rezultat().porukaKategorije }}</p>
+
+      <dl class="detalji">
+        <div>
+          <dt>Pozitivni odgovori (Dio A, screener)</dt>
+          <dd>{{ rezultat().pozitivnoA }} / 6</dd>
+        </div>
+        <div>
+          <dt>Pozitivni odgovori ukupno</dt>
+          <dd>{{ rezultat().pozitivnoUkupno }} / {{ pitanja().length }}</dd>
+        </div>
+        <div>
+          <dt>Sirovi zbroj</dt>
+          <dd>{{ rezultat().ukupnoSum }} / {{ rezultat().maxSum }}</dd>
+        </div>
+      </dl>
+
+      @if (rezultat().screenerPozitivan) {
+        <div class="upozorenje istaknuto">
+          <strong>Screener Dijela A je pozitivan</strong> (≥ 4 pozitivna odgovora u 6
+          pitanja). Prema standardnoj ASRS interpretaciji, vaši simptomi su konzistentni
+          s ADHD-om u odraslih i <strong>preporuča se daljnja klinička procjena</strong>.
+        </div>
+      }
+
+      <div class="upozorenje">
+        <strong>Što sad?</strong>
+        <ul>
+          <li>Razgovarajte s <strong>obiteljskim liječnikom</strong> i zatražite uputnicu prema psihijatru ili kliničkom psihologu.</li>
+          <li>U Hrvatskoj se ADHD u odraslih dijagnosticira u <strong>psihijatrijskim ambulantama</strong> i <strong>centrima za mentalno zdravlje</strong>.</li>
+          <li>Ovaj rezultat ponesite na pregled kao orijentacijsku informaciju — <em>nije zamjena za stručnu procjenu</em>.</li>
+        </ul>
+      </div>
+
+      <div class="navigacija">
+        <button type="button" class="sekundarni-gumb" (click)="ispocetka()">
+          Ponovi provjeru
+        </button>
+      </div>
+    </section>
+  }
+
+  <footer class="podnozje">
+    <p>
+      Izvor upitnika: ASRS v1.1 — World Health Organization &amp; Harvard Medical School
+      (Kessler i sur., 2005). Aplikacija radi 100&nbsp;% offline; nijedan odgovor ne
+      napušta vaš preglednik.
+    </p>
+  </footer>
+</main>
