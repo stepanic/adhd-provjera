@@ -8,6 +8,7 @@ import {
 import { Welcome } from './components/Welcome';
 import { Question } from './components/Question';
 import { Result } from './components/Result';
+import { BrandHeader, DomovinaFooter, TricolorStrip } from './components/Brand';
 
 type Korak = 'pocetak' | 'upitnik' | 'rezultat';
 export type Verzija = 'kratko' | 'puno';
@@ -59,43 +60,45 @@ export default function App() {
   };
 
   return (
-    <main className="mx-auto max-w-2xl px-4 py-6 pb-12">
-      <header className="text-center pt-4 pb-8">
-        <h1 className="text-3xl font-bold text-[#2d3a66] m-0">ADHD provjera</h1>
-        <p className="mt-1 text-sm text-[#5a627a]">
-          Offline alat za samoprocjenu prema ASRS v1.1
-        </p>
-      </header>
+    <div className="min-h-screen flex flex-col">
+      <TricolorStrip position="top" />
 
-      {korak === 'pocetak' && <Welcome onStart={zapocni} />}
+      <main className="mx-auto w-full max-w-2xl px-4 py-2 pb-10 flex-1">
+        <BrandHeader />
 
-      {korak === 'upitnik' && (
-        <Question
-          pitanje={pitanja[trenutni]}
-          ukupno={pitanja.length}
-          indeks={trenutni}
-          odgovor={odgovori[trenutni]}
-          onOdgovor={postaviOdgovor}
-          onNatrag={natrag}
-          onNaprijed={naprijed}
-        />
-      )}
+        {korak === 'pocetak' && <Welcome onStart={zapocni} />}
 
-      {korak === 'rezultat' && (
-        <Result
-          rezultat={rezultat}
-          ukupno={pitanja.length}
-          onIspocetka={ispocetka}
-        />
-      )}
+        {korak === 'upitnik' && (
+          <Question
+            pitanje={pitanja[trenutni]}
+            ukupno={pitanja.length}
+            indeks={trenutni}
+            odgovor={odgovori[trenutni]}
+            onOdgovor={postaviOdgovor}
+            onNatrag={natrag}
+            onNaprijed={naprijed}
+          />
+        )}
 
-      <footer className="text-center text-xs text-[#5a627a] px-2">
-        <p>
-          Izvor upitnika: ASRS v1.1 — World Health Organization &amp; Harvard Medical
-          School (Kessler i sur., 2005). Aplikacija radi 100&nbsp;% offline; nijedan
-          odgovor ne napušta vaš preglednik.
-        </p>
-      </footer>
-    </main>
+        {korak === 'rezultat' && (
+          <Result
+            rezultat={rezultat}
+            ukupno={pitanja.length}
+            onIspocetka={ispocetka}
+          />
+        )}
+
+        <footer className="text-center text-xs text-domovina-muted px-2 mt-2">
+          <p>
+            Izvor upitnika: ASRS v1.1 — World Health Organization &amp; Harvard Medical
+            School (Kessler i sur., 2005). Aplikacija radi 100&nbsp;% offline; nijedan
+            odgovor ne napušta vaš preglednik.
+          </p>
+          <DomovinaFooter />
+        </footer>
+      </main>
+
+      <TricolorStrip position="bottom" />
+    </div>
   );
 }

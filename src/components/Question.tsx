@@ -27,32 +27,32 @@ export function Question({
   const mozeNaprijed = odgovor != null;
 
   return (
-    <section className="bg-white rounded-2xl p-6 sm:p-7 shadow-[0_6px_24px_rgba(40,50,90,0.08)] mb-6">
+    <section className="bg-white border border-domovina-border rounded-2xl p-6 sm:p-7 shadow-card mb-6">
       <div
-        className="h-2 bg-[#e6ebf5] rounded-full overflow-hidden mb-3"
+        className="h-2 bg-domovina-navy-50 rounded-full overflow-hidden mb-3"
         aria-label={`Napredak ${napredak} posto`}
       >
         <div
-          className="h-full bg-gradient-to-r from-emerald-500 via-amber-400 to-red-500 transition-[width] duration-300"
+          className="h-full bg-domovina-navy transition-[width] duration-300"
           style={{ width: `${napredak}%` }}
         />
       </div>
 
-      <div className="flex justify-between items-center text-sm text-[#5a627a] mb-4">
+      <div className="flex justify-between items-center text-sm text-domovina-muted mb-4">
         <span>
           Pitanje {indeks + 1} od {ukupno}
         </span>
-        <span className="bg-[#eef0f8] rounded-full px-3 py-0.5 text-xs">
+        <span className="bg-domovina-navy-50 text-domovina-navy rounded-full px-3 py-0.5 text-xs font-semibold">
           Dio {pitanje.dio}
         </span>
       </div>
 
-      <h2 className="text-lg sm:text-xl font-medium text-[#1a1f2c] leading-snug mt-0 mb-4">
+      <h2 className="text-lg sm:text-xl font-semibold text-domovina-ink leading-snug mt-0 mb-4">
         {pitanje.tekst}
       </h2>
 
-      <aside className="bg-[#f0f4fc] border-l-[3px] border-[#8aa0d6] rounded-md px-4 py-3 mb-5 text-[14px] text-[#3c4868] italic leading-relaxed">
-        <span className="inline-block bg-[#8aa0d6] text-white not-italic font-semibold text-[10px] uppercase tracking-wide px-2 py-0.5 rounded-full mr-2 align-middle">
+      <aside className="bg-domovina-navy-50 border-l-[3px] border-domovina-navy rounded-md px-4 py-3 mb-5 text-[14px] text-domovina-ink/80 italic leading-relaxed">
+        <span className="inline-block bg-domovina-navy text-white not-italic font-bold text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full mr-2 align-middle">
           Primjer
         </span>
         {pitanje.primjer}
@@ -73,8 +73,8 @@ export function Question({
               className={cn(
                 'group text-left rounded-xl px-4 py-3.5 border transition font-medium',
                 odabran
-                  ? 'bg-brand-500 text-white border-brand-600'
-                  : 'bg-[#f6f8fc] text-[#1a1f2c] border-[#dbe2f0] hover:bg-[#eef2fa]',
+                  ? 'bg-domovina-navy text-white border-domovina-navy-700'
+                  : 'bg-white text-domovina-ink border-domovina-border hover:bg-domovina-navy-50',
               )}
             >
               {o.oznaka}
@@ -88,7 +88,7 @@ export function Question({
           type="button"
           onClick={onNatrag}
           disabled={!mozeNatrag}
-          className="bg-white border border-[#c8d0e0] text-[#2d3a66] rounded-xl px-4 py-3 hover:bg-[#f0f3fa] disabled:opacity-45 disabled:cursor-not-allowed"
+          className="bg-white border border-domovina-border text-domovina-navy rounded-xl px-4 py-3 hover:bg-domovina-navy-50 disabled:opacity-40 disabled:cursor-not-allowed"
         >
           ← Natrag
         </button>
@@ -96,7 +96,7 @@ export function Question({
           type="button"
           onClick={onNaprijed}
           disabled={!mozeNaprijed}
-          className="bg-brand-500 hover:bg-brand-600 text-white font-semibold rounded-xl px-4 py-3 disabled:opacity-45 disabled:cursor-not-allowed"
+          className="bg-domovina-navy hover:bg-domovina-navy-600 text-white font-semibold rounded-xl px-4 py-3 disabled:opacity-40 disabled:cursor-not-allowed"
         >
           {zadnje ? 'Prikaži rezultat' : 'Sljedeće →'}
         </button>

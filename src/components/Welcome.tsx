@@ -6,8 +6,8 @@ interface Props {
 
 export function Welcome({ onStart }: Props) {
   return (
-    <section className="bg-white rounded-2xl p-7 shadow-[0_6px_24px_rgba(40,50,90,0.08)] mb-6">
-      <h2 className="text-2xl font-semibold text-[#2d3a66] mt-0">Dobrodošli</h2>
+    <section className="bg-white border border-domovina-border rounded-2xl p-6 sm:p-7 shadow-card mb-6">
+      <h2 className="text-2xl font-bold text-domovina-navy mt-0">Dobrodošli</h2>
 
       <p className="text-[15px] leading-relaxed">
         Ova aplikacija provodi <strong>samoprocjenu</strong> simptoma ADHD-a u odraslih
@@ -16,7 +16,7 @@ export function Welcome({ onStart }: Props) {
         pregledniku — ništa se ne šalje na internet.
       </p>
 
-      <div className="bg-amber-50 border-l-4 border-amber-500 rounded-md px-4 py-3 my-4 text-[15px]">
+      <div className="bg-domovina-red-soft border-l-4 border-domovina-red rounded-md px-4 py-3 my-4 text-[15px]">
         <strong>Važno:</strong> rezultat ove provjere <em>nije medicinska dijagnoza</em>.
         ADHD može dijagnosticirati isključivo kvalificirani liječnik (psihijatar) ili
         klinički psiholog kroz detaljnu kliničku procjenu. Ako vam rezultat ili vlastiti
@@ -24,7 +24,7 @@ export function Welcome({ onStart }: Props) {
         upute na specijalističku obradu.
       </div>
 
-      <h3 className="text-lg font-semibold text-[#2d3a66] mb-2 mt-4">
+      <h3 className="text-lg font-semibold text-domovina-navy mb-2 mt-4">
         Odaberite verziju upitnika
       </h3>
 
@@ -32,7 +32,7 @@ export function Welcome({ onStart }: Props) {
         <button
           type="button"
           onClick={() => onStart('kratko')}
-          className="bg-brand-500 hover:bg-brand-600 active:scale-[0.99] transition text-white font-semibold rounded-xl py-4 px-4 text-center"
+          className="bg-domovina-navy hover:bg-domovina-navy-600 active:scale-[0.99] transition text-white font-semibold rounded-xl py-4 px-4 text-center"
         >
           <div>Kratka verzija (6 pitanja)</div>
           <div className="font-normal text-sm opacity-85 mt-1">
@@ -42,7 +42,7 @@ export function Welcome({ onStart }: Props) {
         <button
           type="button"
           onClick={() => onStart('puno')}
-          className="bg-brand-500 hover:bg-brand-600 active:scale-[0.99] transition text-white font-semibold rounded-xl py-4 px-4 text-center"
+          className="bg-white border border-domovina-navy text-domovina-navy hover:bg-domovina-navy-50 active:scale-[0.99] transition font-semibold rounded-xl py-4 px-4 text-center"
         >
           <div>Puna verzija (18 pitanja)</div>
           <div className="font-normal text-sm opacity-85 mt-1">

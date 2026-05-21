@@ -13,12 +13,12 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
       manifest: {
-        name: 'ADHD provjera',
-        short_name: 'ADHD provjera',
+        name: 'ADHD.provjera — DOMOVINA.ai',
+        short_name: 'ADHD.provjera',
         description:
-          'Offline samoprocjena simptoma ADHD-a u odraslih prema ASRS v1.1 (WHO / Harvard).',
-        theme_color: '#3a56d4',
-        background_color: '#eef3fb',
+          'Offline samoprocjena simptoma ADHD-a u odraslih prema ASRS v1.1 (WHO / Harvard). Dio DOMOVINA.ai ekosustava.',
+        theme_color: '#002F6C',
+        background_color: '#FFFFFF',
         display: 'standalone',
         orientation: 'portrait',
         scope: base,
@@ -40,7 +40,8 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,ico,webp,woff,woff2}'],
+        // Precache samo woff2 (modern fallback), preskačemo woff koji su duplikati.
+        globPatterns: ['**/*.{js,css,html,svg,png,ico,webp,woff2}'],
         navigateFallback: 'index.html',
         cleanupOutdatedCaches: true,
       },

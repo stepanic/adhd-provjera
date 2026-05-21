@@ -6,30 +6,33 @@ interface Props {
   onIspocetka: () => void;
 }
 
+// Kategorije idu od smirene navy preko bijele do crvenog naglaska.
 const BOJE_KATEGORIJA: Record<Kategorija, string> = {
-  niska: 'bg-emerald-50',
-  blaga: 'bg-amber-50',
-  umjerena: 'bg-orange-50',
-  izrazena: 'bg-red-50',
+  niska: 'bg-domovina-navy-50',
+  blaga: 'bg-domovina-navy-100',
+  umjerena: 'bg-amber-50',
+  izrazena: 'bg-domovina-red-soft',
 };
 
 export function Result({ rezultat, ukupno, onIspocetka }: Props) {
   return (
-    <section className="bg-white rounded-2xl p-6 sm:p-7 shadow-[0_6px_24px_rgba(40,50,90,0.08)] mb-6">
-      <h2 className="text-2xl font-semibold text-[#2d3a66] mt-0 mb-4">Vaš rezultat</h2>
+    <section className="bg-white border border-domovina-border rounded-2xl p-6 sm:p-7 shadow-card mb-6">
+      <h2 className="text-2xl font-bold text-domovina-navy mt-0 mb-4">Vaš rezultat</h2>
 
       <div
         className={`text-center rounded-xl py-5 px-4 ${BOJE_KATEGORIJA[rezultat.kategorija]}`}
       >
-        <div className="text-5xl font-bold text-[#2d3a66] leading-none">
+        <div className="text-5xl font-extrabold text-domovina-navy leading-none">
           {rezultat.indikator}
         </div>
-        <div className="text-sm text-[#5a627a] mt-1">indikator simptoma (0–100)</div>
+        <div className="text-sm text-domovina-muted mt-1">
+          indikator simptoma (0–100)
+        </div>
       </div>
 
-      <div className="h-3.5 bg-[#e6ebf5] rounded-full overflow-hidden mt-4 mb-2">
+      <div className="h-3.5 bg-domovina-navy-50 rounded-full overflow-hidden mt-4 mb-2">
         <div
-          className="h-full bg-gradient-to-r from-emerald-500 via-amber-400 to-red-500 transition-[width] duration-500"
+          className="h-full bg-gradient-to-r from-domovina-navy via-amber-400 to-domovina-red transition-[width] duration-500"
           style={{ width: `${rezultat.indikator}%` }}
         />
       </div>
@@ -43,14 +46,14 @@ export function Result({ rezultat, ukupno, onIspocetka }: Props) {
       </dl>
 
       {rezultat.screenerPozitivan && (
-        <div className="bg-red-50 border-l-4 border-red-600 rounded-md px-4 py-3 my-4 text-[15px]">
+        <div className="bg-domovina-red-soft border-l-4 border-domovina-red rounded-md px-4 py-3 my-4 text-[15px]">
           <strong>Screener Dijela A je pozitivan</strong> (≥ 4 pozitivna odgovora u 6
           pitanja). Prema standardnoj ASRS interpretaciji, vaši simptomi su konzistentni
           s ADHD-om u odraslih i <strong>preporuča se daljnja klinička procjena</strong>.
         </div>
       )}
 
-      <div className="bg-amber-50 border-l-4 border-amber-500 rounded-md px-4 py-3 my-4 text-[15px]">
+      <div className="bg-domovina-navy-50 border-l-4 border-domovina-navy rounded-md px-4 py-3 my-4 text-[15px]">
         <strong>Što sad?</strong>
         <ul className="list-disc pl-5 mt-1 space-y-1">
           <li>
@@ -73,7 +76,7 @@ export function Result({ rezultat, ukupno, onIspocetka }: Props) {
         <button
           type="button"
           onClick={onIspocetka}
-          className="bg-white border border-[#c8d0e0] text-[#2d3a66] rounded-xl px-4 py-3 hover:bg-[#f0f3fa]"
+          className="bg-white border border-domovina-navy text-domovina-navy rounded-xl px-4 py-3 hover:bg-domovina-navy-50 font-semibold"
         >
           Ponovi provjeru
         </button>
@@ -84,9 +87,9 @@ export function Result({ rezultat, ukupno, onIspocetka }: Props) {
 
 function Row({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex justify-between border-b border-dashed border-[#dbe2f0] pb-1">
-      <dt className="text-[#5a627a] m-0">{label}</dt>
-      <dd className="m-0 font-semibold">{value}</dd>
+    <div className="flex justify-between border-b border-dashed border-domovina-border pb-1">
+      <dt className="text-domovina-muted m-0">{label}</dt>
+      <dd className="m-0 font-semibold text-domovina-ink">{value}</dd>
     </div>
   );
 }
