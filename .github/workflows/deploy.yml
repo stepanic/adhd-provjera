@@ -1,4 +1,9 @@
-name: Deploy to GitHub Pages
+name: Deploy redirect to GitHub Pages
+
+# Ovaj repo je arhiviran. GitHub Pages serviraju samo statičnu redirect
+# stranicu prema novoj produkcijskoj lokaciji: https://provjera.domovina.ai
+# Kompletan izvorni kod i nastavak razvoja je na:
+#   https://github.com/domovinatv/provjera.domovina.ai
 
 on:
   push:
@@ -20,22 +25,46 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
+      - name: Generate redirect site
+        run: |
+          mkdir -p dist
+          cat > dist/index.html <<'HTML'
+          <!DOCTYPE html>
+          <html lang="hr">
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>ADHD provjera — preseljeno</title>
+            <meta http-equiv="refresh" content="0; url=https://provjera.domovina.ai/">
+            <link rel="canonical" href="https://provjera.domovina.ai/">
+            <meta name="theme-color" content="#002F6C">
+            <style>
+              body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+                     background: #fff; color: #0e1a33; max-width: 36rem;
+                     margin: 4rem auto; padding: 1rem; line-height: 1.5; }
+              h1 { color: #002F6C; }
+              a { color: #002F6C; font-weight: 600; }
+              .note { background: #f6f8fc; border-left: 4px solid #002F6C;
+                      padding: 1rem; border-radius: 8px; margin: 1.5rem 0; }
+            </style>
+          </head>
+          <body>
+            <h1>ADHD provjera se preselila</h1>
+            <p>Aplikacija je sada na novoj produkcijskoj lokaciji:</p>
+            <p><a href="https://provjera.domovina.ai/">https://provjera.domovina.ai</a></p>
+            <div class="note">
+              Ako vas preglednik nije automatski preusmjerio, kliknite poveznicu iznad.
+              <br><br>
+              Izvorni kod aplikacije nastavlja se razvijati pod
+              <a href="https://github.com/domovinatv/provjera.domovina.ai">domovinatv/provjera.domovina.ai</a>.
+              Ovaj GitHub repozitorij je arhiviran i čuva se isključivo radi povijesti.
+            </div>
+            <script>window.location.replace('https://provjera.domovina.ai/');</script>
+          </body>
+          </html>
+          HTML
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build
-        run: npm run build
-        env:
-          VITE_BASE: /adhd-provjera/
-
-      - name: Copy index.html to 404.html (SPA fallback)
-        run: cp dist/index.html dist/404.html
+          cp dist/index.html dist/404.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
