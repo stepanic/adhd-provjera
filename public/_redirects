@@ -1,0 +1,6 @@
+# Cloudflare Pages SPA fallback.
+# Sve rute koje se ne poklapaju s postojećim fajlom serviraju index.html
+# tako da React aplikacija obradi rutu klijentski.
+# Vidi: https://developers.cloudflare.com/pages/configuration/redirects/
+
+/*    /index.html   200

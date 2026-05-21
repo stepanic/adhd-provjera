@@ -1,0 +1,20 @@
+# Cloudflare Pages konfiguracija za wrangler CLI deploy.
+# Vidi: https://developers.cloudflare.com/pages/functions/wrangler-configuration/
+#
+# Koristi se za:
+#   wrangler pages deploy dist --project-name adhd-provjera
+#
+# Ako se Cloudflare Pages spaja direktno na GitHub repo (preporuka), ovaj
+# file nije strogo potreban — Pages dashboard ima sve postavke. Ovdje je
+# dokumentiran kao referenca i podrška manual deploy-u.
+
+name = "adhd-provjera"
+compatibility_date = "2026-05-21"
+pages_build_output_dir = "dist"
+
+[vars]
+# Vite čita VITE_BASE env varijablu pri build-u. Za root-hosted subdomain
+# (npr. provjera.domovina.ai) treba biti "/", što je vec default.
+# Ova vrijednost se zapravo ne koristi runtime — pages build koristi
+# environment variables iz dashboard-a (Settings → Environment variables).
+# Ovdje je samo dokumentacija.

@@ -74,6 +74,65 @@ Produkcijski build je čisto statički (HTML + JS + CSS + service worker). Hosta
 se s bilo kojeg statičkog hostinga (GitHub Pages, Netlify, Cloudflare Pages,
 vlastiti web). Bez backenda.
 
+### GitHub Pages (trenutno aktivno)
+
+Live na <https://stepanic.github.io/adhd-provjera/>. Deploy preko GitHub
+Actions workflow-a `.github/workflows/deploy.yml` na svaki push u `main`. Build
+koristi `VITE_BASE=/adhd-provjera/` jer je app na subpath-u repo-imena.
+
+### Cloudflare Pages (preporučeno za produkciju na domovina.ai poddomeni)
+
+Cloudflare Pages se preporuča za produkciju jer:
+
+- Bolja kontrola **Cache-Control** headera (presudno za PWA — vidi
+  `public/_headers`), čime se update detektira odmah a ne nakon 24h.
+- Domovina ekosustav je već vezan uz `domovina.ai` (npr. `gis.domovina.ai`,
+  `pay.domovina.ai`), pa je `*.domovina.ai` prirodna lokacija.
+- Custom domena, automatski HTTPS, brzi global edge cache.
+
+**Build postavke za Cloudflare Pages dashboard:**
+
+| Field | Vrijednost |
+|---|---|
+| Framework preset | None (Vite je dovoljno generičan) |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Root directory | `/` |
+| Node.js version | `22` (kompatibilno s lockfile-om) |
+
+**Environment variables** (Settings → Environment variables → Production):
+
+| Ime | Vrijednost |
+|---|---|
+| `VITE_BASE` | `/` (root-hosted na poddomeni, nije subpath) |
+| `NODE_VERSION` | `22` |
+
+**Config datoteke** u repo-u već postoje:
+
+- `public/_redirects` — SPA fallback (`/* /index.html 200`)
+- `public/_headers` — Cache-Control politika (immutable za hashed assete, no-cache za `sw.js` i `index.html`)
+- `wrangler.toml` — meta za optional `wrangler pages deploy` CLI workflow
+
+**Postupak deploy-a (jednokratan setup):**
+
+1. Cloudflare dashboard → Pages → **Create application** → Connect to Git → odaberi `stepanic/adhd-provjera` repo, branch `main`
+2. Build postavke kao iznad
+3. Environment variables kao iznad
+4. Save and Deploy — prvi build kreira projekt s privremenim URL-om (`adhd-provjera.pages.dev`)
+5. Custom domain: **Custom domains** → **Set up a custom domain** → unesi željenu poddomenu (npr. `provjera.domovina.ai`). Cloudflare automatski kreira CNAME u DNS-u ako je `domovina.ai` već u istom Cloudflare accountu.
+6. Sljedeći push u `main` okida automatski build na CF Pages (paralelno s GitHub Pages workflow-om).
+
+**Alternativa — manual CLI deploy** (bez GitHub integracije):
+
+```bash
+npm install -g wrangler
+wrangler login
+VITE_BASE=/ npm run build
+wrangler pages deploy dist --project-name adhd-provjera --branch main
+```
+
+Korisno za hot-fix deploy iz lokalnog okruženja bez čekanja na CI.
+
 ## Izvori
 
 - Kessler RC, Adler L, Ames M, et al. *The World Health Organization Adult ADHD
